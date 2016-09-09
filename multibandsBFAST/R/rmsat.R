@@ -1,5 +1,6 @@
 #' @title remove extreme values
-#' @param x
+#' @param x time series
+#' @return x time series with extreme value and negative value filled with NA
 #' @export
 rmsat <-
 function(x){ 

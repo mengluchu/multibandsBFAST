@@ -6,4 +6,10 @@
 \usage{
 rmsat(x)
 }
+\arguments{
+\item{x}{time series}
+}
+\value{
+x time series with extreme value and negative value filled with NA
+}
 
