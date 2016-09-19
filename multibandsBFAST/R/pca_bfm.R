@@ -4,8 +4,8 @@
 pca_bfm <- function(arr, hisweight, pcacomp, 
                              myear, 
                              history = c("all"),
-                             my_dates, scoreselect=F,
-                             lastordetect=c("last","detect"), 
+                             my_dates, scoreselect,
+                             lastordetect, 
                              minumum_observations = 15, sca,
                              type ="OLS-MOSUM",moy=1) { 
   
@@ -49,11 +49,11 @@ pca_bfm <- function(arr, hisweight, pcacomp,
           #select eigen vector
           pcacomp <- which.max( abs(apply(fit$rotation[1:3,] 
                                           -fit$rotation[ 4:6,] ,2, sum)))
-          
+        
           PCweight <- fit$rotation[,pcacomp]
           
           inputPCAarr[inputPCAarr=="-Inf"] <- NA
-          inputPCAarr[inputPCAarr=="Inf"] <- NA
+          
           #PCts<- scale(inputPCAarr) %*% PCweight #scale multiply by weight
           if(sca)  
             inputPCAarr<-apply(inputPCAarr, 2, scale)#scale the data

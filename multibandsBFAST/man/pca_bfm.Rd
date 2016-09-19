@@ -5,8 +5,8 @@
 \title{Integrate PCA in bfast monitor}
 \usage{
 pca_bfm(arr, hisweight, pcacomp, myear, history = c("all"), my_dates,
-  scoreselect = F, lastordetect = c("last", "detect"),
-  minumum_observations = 15, sca, type = "OLS-MOSUM", moy = 1)
+  scoreselect, lastordetect, minumum_observations = 15, sca,
+  type = "OLS-MOSUM", moy = 1)
 }
 \arguments{
 \item{arr}{imput array}

@@ -1,10 +1,10 @@
 Package: multibandsBFAST
 Type: Package
-Title: integration into BFAST Monitor framework
+Title: Multispectral BFAST Monitor
 Version: 1.0
 Date: 2016-08-24
 Author: Meng Lu
 Maintainer:  <lumeng0312@gmail.com>
-Description: multispectral change monitoring
+Description: Integrating PCA into BFAST Monitor framework for multispectral change monitoring
 License: ifgi
 RoxygenNote: 5.0.1

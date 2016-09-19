@@ -1,7 +1,13 @@
-
+#' @title validation
+#' @param cx2 validation chart, dataframe with true date in the first row
+#' @param oridensetime array time 
+#' @param oritemplate a matrix of the location of each time stamp of each time series.To compare the time by observations 
+#' @return daf3 dataframe with confusion matrix and time delay. can use stargazer to generate a table
+#' @import stargazer
+#' @export 
 #VALIDATION
 #**************************************************************************
-require(stargazer)
+#require(stargazer)
 #set working directory
 #setwd("C:/Users/m_lu0002/Dropbox")
 #load("C:/Users/m_lu0002/Dropbox/mengluchu/multispectralbfast/valichart3.Rdata")
@@ -10,23 +16,29 @@ require(stargazer)
 #load("C:/Users/m_lu0002/Dropbox/mengluchu/multispectralbfast/brbo5.Rdata")
 #load("C:/Users/m_lu0002/Dropbox/mengluchu/multispectralbfast/valichartBrazil3.Rdata")
 
-#'Bolivia'
+# Bolivia 
 #bovali<-valitable(cx2=valichart,oridensetime=time_B1000, oritemplate= bobo5)
 
 # Brazil
 #brvali<-valitable(valichartBrazil2, Braziltime, brbo5)
 #stargazer(bovali, summary =FALSE)
-
-#valichart[,"pcaauto"]<-c(a1,a2)
-valitable<-function(cx2, oridensetime, oritemplate ){
+ 
+valitable<-function(cx2, oridensetime, oritemplate,EarlyDateIsCommission=T, totalp, nofchange,colmWith=2){
   
  
-  
-  spatialAccurayAssessmentx <- function(x,nOfindices = 1, EarlyDateIsCommission = F){
+  spatialAccurayAssessmentx <- function(x,nOfindices, EarlyDateIsCommission,
+                                        TotalSamplesize, 
+                                        snumberOfsamplefromChange,
+                                        colmWith =2){
+    require(lubridate)
     
+    if (is.null(TotalSamplesize) |is.null(snumberOfsamplefromChange)){
+      stop("TotalSamplesize and snumberOfsamplefromChange must not be null")
+      
+    }
     # x is the table that contain the data
     cx2 <- x
-    cx2$ChangeDate <- replace (cx2$ChangeDate, cx2$ChangeDate ==8, NA)
+    cx2$ChangeDate <- replace (cx2$ChangeDate, cx2$ChangeDate == 8, NA)
     
     ct <- subset(cx2, is.na(cx2$ChangeDate))
     ct2 <- subset(cx2, !is.na(cx2$ChangeDate))
@@ -35,10 +47,11 @@ valitable<-function(cx2, oridensetime, oritemplate ){
     
     cx1 <- rbind(ct, ct2)
     
-    xo <- c("OverallAC", "CommError", "OmissError") 
-    nc <- 2
-    nz <- 2
+    xo <- c("Pontius Producer's Accuracy", "Sensitivity", "Precision")
+    nc <- colmWith
+    nz <- colmWith
     pa4 <-nOfindices
+    va0 <- c()
     for (i in 1: pa4){
       nc <- nc + 2
       cp1 <- as.vector(cx1[, nz])
@@ -47,48 +60,56 @@ valitable<-function(cx2, oridensetime, oritemplate ){
       for (j in 1: length(cp1)) {
         xt1 <- cp1[j]
         xt2 <- cp2[j]
+        print(c(xt1,xt2 ))
         
         #check if it is true positive or true negative
         if (is.na(xt1) & is.na(xt2)){
-          ba0 <- "ok"
+          ba0 <- "tn"
           va0 <- c(va0, ba0)
           tl0 <- F
         }else {tl0 <- T}
         
         tr0 <- xt2 + 0.002
         if (tl0 == T & !is.na (xt1) & !is.na(xt2) & xt1 <= tr0 |tl0 == T & !is.na (xt1) & !is.na(xt2) & xt1 > tr0 & EarlyDateIsCommission == F){
-          ba0 <- "ok"
+          ba0 <- "tp"
           va0 <- c(va0, ba0)
           et3 <- F
         }else {et3 <- T}
         
         # check if it is omission error
         if (tl0 == T & et3 == T &!is.na (xt1) & is.na (xt2) ){
-          ba0 <- "om"
+          ba0 <- "fn"
           va0 <- c(va0, ba0)
           be1 <- F
         }else { be1 <- T}
         
         #Check if it is commission error
         
-        if (tl0 == T & et3 == T & be1 ==T & !is.na (xt1) & !is.na (xt2) |tl0 == T & et3 == T & be1 ==T & !is.na (xt1) & !is.na (xt2) & xt1 > xt2 & EarlyDateIsCommission == T ){ 
-          ba0 <- "co"
-          va0 <- c(va0, ba0) 
+        if (tl0 == T & et3 == T & be1 ==T & !is.na (xt1) & !is.na (xt2) |tl0 == T & et3 == T & be1 ==T & !is.na (xt1) & !is.na (xt2) & xt1 > xt2 & EarlyDateIsCommission == T ){
+          ba0 <- "fp"
+          va0 <- c(va0, ba0)
           ze0 <- F
         }else {ze0 <- T}
         
         if (tl0 == T & et3 == T & ze0  == T & is.na (xt1) & !is.na (xt2)){
-          ba0 <- "co"
-          va0 <- c(va0, ba0) 
+          ba0 <- "fp"
+          va0 <- c(va0, ba0)
         }
       }
       # calculate overall accuracy and errors
-      co <- (length(subset  (va0 , va0  == "co"))/ length(va0))*100
-      ok <- (length(subset  (va0 , va0  == "ok"))/ length(va0))*100
-      om <- (length(subset  (va0 , va0  == "om"))/ length(va0))*100
-      x0 <- c(ok, co, om)
-      xo <- rbind(xo,x0)
+      #co <- (length(subset  (va0 , va0  == "co"))/ length(va0))*100
+      #ok <- (length(subset  (va0 , va0  == "ok"))/ length(va0))*100
+      #om <- (length(subset  (va0 , va0  == "om"))/ length(va0))*100
+      #x0 <- c(ok, co, om)
+      # xo <- rbind(xo,x0)
       
+      # number of true
+      
+      uSA <- (length(subset  (va0 , va0  == "tp")))/ (length(subset  (va0 , va0  == "tp")) + length(subset  (va0 , va0  == "fp"))) * 100
+      pPA <- (length(subset  (va0 , va0  == "tp")))/ (length(subset  (va0 , va0  == "tp")) + length(subset  (va0 , va0  == "fn")))*100
+      po <- length(subset  (va0 , va0  == "tp"))/ (length(subset  (va0 , va0  == "tp")) + length(subset  (va0 , va0  == "fn"))+ length(subset  (va0 , va0  == "fp"))) * 100
+      dox <- c(round(po, digit=1), round(pPA,digit=1),round(uSA,digit=1))
+      xo <- rbind(xo, dox)
     }
     
     return(xo)
@@ -160,7 +181,9 @@ valitable<-function(cx2, oridensetime, oritemplate ){
   #cx2$ChangeDate <- replace (cx2$ChangeDate, cx2$ChangeDate ==8, NA)
   
   nOfindices2 <-  Len-1 
-  s<-spatialAccurayAssessmentx (x=cx2, nOfindices=nOfindices2,EarlyDateIsCommission=T )
+  s<-spatialAccurayAssessmentx (x=cx2, nOfindices=nOfindices2,EarlyDateIsCommission= EarlyDateIsCommission, TotalSamplesize = totalp, 
+                                snumberOfsamplefromChange = nofchange,
+                                colmWith = colmWith )
   
   Bo5df<-data.frame(oritemplate)
   
@@ -170,51 +193,9 @@ valitable<-function(cx2, oridensetime, oritemplate ){
   s1<-s[-1,]
   daf3<-cbind(s1,xme)
   
-  colnames(daf3)<-c('overall accuracy',"commision error","ommision error","temporal_delay")
+  colnames(daf3)<-c('Pontius Producers accuracy',"sensitivity","precision","temporal_delay")
   rownames(daf3)<-varnames  
   return(daf3)
   #stargazer(daf3, summary =FALSE)
 }
-#valichart[,"historypca"]<-historypca
-
-#daf5<-brvali
-#daf5<-as.matrix(daf5)
-#jpeg("validation3.jpg",width=660,height=400)
-#layout(matrix(c(1,1,2),1, 3),c(1,1),c(1,1))
-##rownames(daf5)<-vname2
-#n=nrow(daf5)
-#barplot(daf5[,1:3],beside=T,
-        #legend.text=         
-#        cex.main=2,
-#        font.main=2,
-#        col=bpy.colors(n),
-#        pch=15,
-#        cex.axis=1.2, cex.names=1.1,cex.lab=1.2,
-        #=rainbow(8,s = 1, v = 1, start = 0.05, end = 0.35),
-#        legend.text= vname2,
-#        args.legend = list(x = "topright", bty = "n",cex=1.2),
-#        xlab="spataial error")
-#rownames(daf5)<-NULL
-#barplot(daf5[ ,4],beside=T,
-#        #legend.text=         
-#        col=bpy.colors(n),
-#        cex.main=2,
-#        font.main=2,
-#        cex.axis=1.2, cex.names=1.1,cex.lab=1.2,
-#        xlab="temporal delay"
-#)
-
-#dev.off()    
  
-#****************************************************************************
-#TEMPORAL DELAY
-
-#NUMBER OF OBSERVATIONS BEFORE CHANGED DETECTED
-#*****************************************************************************
-
-#length(tda)
-#cx2<-cx2[,-1]
- 
-#**************************************************************************
-#RETURN SPATIAL ACUURACY: OVERALL, COMMISSION, & OMISSION ERROR
-#**************************************************************************

@@ -2,11 +2,19 @@
 % Please edit documentation in R/validationsimple.R
 \name{valitable}
 \alias{valitable}
-\title{Bolivia'}
+\title{validation}
 \usage{
-valitable(cx2, oridensetime, oritemplate)
+valitable(cx2, oridensetime, oritemplate, EarlyDateIsCommission = T, totalp,
+  nofchange, colmWith = 2)
 }
-\description{
-Bolivia'
+\arguments{
+\item{cx2}{validation chart, dataframe with true date in the first row}
+
+\item{oridensetime}{array time}
+
+\item{oritemplate}{a matrix of the location of each time stamp of each time series.To compare the time by observations}
+}
+\value{
+daf3 dataframe with confusion matrix and time delay. can use stargazer to generate a table
 }
 

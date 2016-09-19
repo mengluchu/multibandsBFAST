@@ -10,10 +10,10 @@
 #' @import plyr
 #' @export 
 bfmPCA<-function(multibandsarr,history=c("all", "ROC", "BP"),
-                    hisweight=T, 
+                    hisweight, 
                     timearr, pcacomp, 
-                    moy=1, 
-                    scoreselect=F,
+                    moy=1, myear=2005,
+                    scoreselect,
                     lastordetect=c("last","detect"),sca=F ){ 
   
   timebfm <-rep(NA,length=dim(multibandsarr)[2])
@@ -26,7 +26,7 @@ bfmPCA<-function(multibandsarr,history=c("all", "ROC", "BP"),
   a7bandsrm2<-aperm(a7bandsrm2, c(3,2,1))
   bfmic <- try (apply(a7bandsrm2, 2, pca_bfm, 
                       hisweight= hisweight, 
-        history= history, myear=2005,
+        history= history, myear=myear,
         my_dates=timearr, moy=moy,
         lastordetect=lastordetect,
         scoreselect=scoreselect, pcacomp=pcacomp,

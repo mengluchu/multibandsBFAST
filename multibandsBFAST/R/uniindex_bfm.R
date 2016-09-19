@@ -1,6 +1,11 @@
-
+#' @title BFAST on single index
+#' @param x input time series coredata
+#' @param my_dates the time book keeped for the time series
+#' @return  date of change 
+ 
+#' @export 
 uniindex_bfm <- function(x, moy=1, myear = 2005,
-                              history = c("all"),
+                              history ,
                               my_dates ,minumum_observations  = 15,
                               type ="OLS-MOSUM") { 
   
@@ -11,7 +16,7 @@ uniindex_bfm <- function(x, moy=1, myear = 2005,
   
   if (length (zv) > minumum_observations){
     dtat <- as.data.frame(proCell)
-    dtat$dates <- my_dates
+    dtat$dates <-  my_dates
     dtat$my_date <- decimal_date(dtat$dates)
     dtat <- subset(dtat, !is.na(dtat$proCell))
     #dtat$proCell<- removedips(dtat$proCell )
@@ -31,12 +36,12 @@ uniindex_bfm <- function(x, moy=1, myear = 2005,
         
         bfm <- bfastmonitor(data = bpts,order=1, formula = response ~ harmon, start=c(stmon, 1), history = history,type =type)
         breakpoint1 <- round(bfm$breakpoint, digit = 5)
-        bfm$magnitude
+        breakpointx <- NA
         if (!is.na(breakpoint1)){
           pred <- mean(as.numeric((fitted(bfm$model))))
-          breakpointx <- round(bfm$breakpoint, digit = 5)
-          tbreak <- breakpointx - 0.004
-          xbreak <- breakpointx + 0.004
+          
+          tbreak <- breakpoint1 - 0.004
+          xbreak <- breakpoint1 + 0.004
           cdte <- subset(dtat2, round(dtat2$my_date , digits = 2) >= round( tbreak , digits =2) & round(dtat2$my_date , digits = 3) <= round( xbreak  , digits =3) )
           observedx <- cdte$proCell
           magnitudex <- observedx - pred

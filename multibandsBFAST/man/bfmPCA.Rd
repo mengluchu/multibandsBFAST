@@ -4,8 +4,8 @@
 \alias{bfmPCA}
 \title{sequentially Monitor change with BFAST-PCA}
 \usage{
-bfmPCA(multibandsarr, history = c("all", "ROC", "BP"), hisweight = T,
-  timearr, pcacomp, moy = 1, scoreselect = F, lastordetect = c("last",
+bfmPCA(multibandsarr, history = c("all", "ROC", "BP"), hisweight, timearr,
+  pcacomp, moy = 1, myear = 2005, scoreselect, lastordetect = c("last",
   "detect"), sca = F)
 }
 \arguments{
