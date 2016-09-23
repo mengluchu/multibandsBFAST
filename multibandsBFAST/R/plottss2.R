@@ -6,25 +6,20 @@
 #' @param nameplot the path and name to save the plot
 #' @param monitoryear year to start monitoring
 #' @param BTestchangeDate validation change date for each location
-# @example for( i in c(1,27,9)){ plotts (arr =Boliviaarr,tctl1=236,timearr=time_B1000,id=i, BTestchangeDate=BDbo, nameplot="boli_"); plotts (arr =Brazilarr ,tctl1=120, timearr=Braziltime,id=i,BTestchangeDate=BDbr, nameplot="br_")}
-
+#' @import ggplot2
+#' @import plyr
 #' @export
-
 
 plotts2<-function(arr, tctl1, timearr, id,
                  nameplot, BTestchangeDate, monitoryear)
 {
-  a1<- try(returnts2(arr7bands1=Brazilarr, 
-                    tctl1=120, timearr=Braziltime,
-                    loca=1)
+  a1<- try(returnts2(inputarr = arr, 
+                    tctl1=tctl1, timearr=timearr,
+                    loca=id, monitoryear = monitoryear)
     ) 
   
   rpcts <- as.numeric(rownames(na.omit(a1[[length(a1)]])))
-  #length(rpcts) 
-  #length(a1[[7]]) - length(a1[[8]]) 
-  #pcscore1[ine] <-   min(unlist(a1)) -2
-  #pcscore1[is.na(pcscore1)]<-pcscore
- 
+
   if(class(a1)!="try-errors"){  
     dta <- data.frame(a1[[2]],a1[[3]] ,
                       a1[[12]],a1[[13]],a1[[14]],a1[[11]],a1[[8]],a1[[8]],
@@ -63,23 +58,25 @@ plotts2<-function(arr, tctl1, timearr, id,
       BFMtime <- BFMtime[-1]
       ti<-  (length(a1)-1)
       BFMtime [7]<-a1[[ti]]
+    idpcg<-a1[[length(a1)-2]]
+    idpcauto<-a1[[length(a1)-3]]
     
     vnames <- c("NDMI","NDVI", 
-                "TB", "TG", "TW","Historical PCA (PC3)","PCA score (PC3)",
-                "PC-brightness (PC1) ","PC-greenness (PC2)")
-    # paste( "PChisauto: PC", a1[[12]]))
+                "TB", "TG", "TW",
+                paste("Historical PCA (", idpcauto, ")", sep=""),
+                paste("PCA score (", idpcauto, ")",sep=""),
+                "PC-brightness (PC1) ",
+                paste("PC-greenness (", idpcg,")", sep=""))
+    
     colnames(dtas) <- vnames
-    #names(dtas)[(1+ncol(dta1)): n]<- vnames
-    #[length(selectv)-ncol(dta1)] # note: only select consecutive, this line of code has to be edited
     times<-decimal_date(strptime( BTestchangeDate,format="%Y%j"))
-    #[i]
+   
     
       dtatime0<-rep (timedec, 6 )
       dtatime02<- rep(timedec, (n-7))
      
      dtatime2<-c(dtatime0,timedec2,dtatime02)
-      #dtatime2<-rep(timedec, n)
-       #values=dtav
+  
      names0 <- rep(vnames[1:6], each=nrow(dtas))
     names01 <- rep(vnames[7],   length(a1[[7]]))
     names02 <- rep(vnames[8:n],   each=nrow(dtas) )
@@ -96,35 +93,24 @@ plotts2<-function(arr, tctl1, timearr, id,
     melted$PCscoreID = factor(melted$PCscoreID, levels=vnames)
      
     
-     
-    barplot <- ggplot(data=melted, 
+    #plot 
+    tsplot <- ggplot(data=melted, 
                       aes(x=time,  y=value, 
                           fill=ID),position = "identity", show_guide=T,stat="identity") +
       geom_point() + geom_line()  +  
       facet_wrap(~PCscoreID,scale = "free_y" , ncol=2)+
       theme(legend.position="none")+xlab(paste("time"))+
-      #    geom_blank(data=min(unlist(a1))-2) + 
-      #ylab(paste(""))+
-      
-      # ggtitle(paste("Time of Real change vs. Detected")) + 
-      geom_vline(show_guide = TRUE,xintercept = times[i],col="red",size=1.2, linetype=2)+ 
+           geom_vline(show_guide = TRUE,xintercept = times[i],col="red",size=1.2, linetype=2)+ 
       theme(axis.text.x = element_text(angle = 45, hjust = 1, size=14),
             
             axis.title.x = element_text(size = 16),axis.title.y = element_text(size = 16),
-            strip.text = element_text(size = 15)
-      )+
+            strip.text = element_text(size = 15)) +
       geom_vline(aes(xintercept = z ,show_guide = TRUE), size =1.2, data=zd, col="blue",linetype=3)
     
     #scale_linetype_manual( "", breaks = c("real change", "detected change" ), values=c("red","blue"),
-    
-    #, ndvi, bands ,ct
-    
-    #jpeg(paste(nameplot,id,".jpg",sep=""),width=1200,height=800)
-    plot(barplot )
+    plot(tsplot )
     ggsave(paste(nameplot,id,".png",sep=""), height=12, width=15, units='in', dpi=500)
-    
-    #dev.off()
-  }
+   }
 }
 
 
@@ -132,13 +118,16 @@ plotts2<-function(arr, tctl1, timearr, id,
 #require(ggplot2)
 #for( i in c(1,27,9))
 #{ 
+#  i=10
   
- # plotts2 (arr = Boliviaarr,tctl1 = 236,timearr=time_B1000,id=i, BTestchangeDate=BDbo, nameplot="boli_", monitoryear=2005)
-#
+# plotts2 (arr = Boliviaarr,tctl1 = 236,timearr=time_B1000,
+#          id=i, BTestchangeDate=BDbo, nameplot="boli_", monitoryear=2005)
+
  
 #   plotts2 (arr = Brazilarr ,tctl1=120, timearr=Braziltime,
 #            id=i,BTestchangeDate=BDbr,
 #          nameplot="br_",monitoryear=2005)
 #}
 
+ 
  

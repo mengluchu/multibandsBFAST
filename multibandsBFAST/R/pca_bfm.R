@@ -1,5 +1,7 @@
 #' @title Integrate PCA in bfast monitor
 #' @param arr imput array
+#' @import zoo
+#' @import reshape2
 #' @export
 pca_bfm <- function(arr, hisweight, pcacomp, 
                              myear, 

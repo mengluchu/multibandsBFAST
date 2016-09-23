@@ -1,3 +1,10 @@
+#' @title tasseled cap transformation on single location
+#' @param arr input array
+#' @param l1 from which index the ETM+ is used 
+#' @return cgreenness
+#' @return cwetness
+#' @return cbrightness
+#' @export 
 tctts<-function(arr, l1)
   
 { 

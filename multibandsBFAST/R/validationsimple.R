@@ -30,7 +30,7 @@ valitable<-function(cx2, oridensetime, oritemplate,EarlyDateIsCommission=T, tota
                                         TotalSamplesize, 
                                         snumberOfsamplefromChange,
                                         colmWith =2){
-    require(lubridate)
+   # require(lubridate)
     
     if (is.null(TotalSamplesize) |is.null(snumberOfsamplefromChange)){
       stop("TotalSamplesize and snumberOfsamplefromChange must not be null")

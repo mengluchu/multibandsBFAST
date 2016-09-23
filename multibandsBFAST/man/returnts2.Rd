@@ -4,11 +4,11 @@
 \alias{returnts2}
 \title{return time series ndmi,ndvi, PCts1, PCts2, PCts3, PCtsauto, PChists1, PChists2, PChists3,PChistsauto, TB, TG, TW. In addition, the removed index is book-keeped}
 \usage{
-returnts2(arr7bands1, timearr, tctl1, monitoryear = 2005, loca,
+returnts2(inputarr, timearr, tctl1, monitoryear = 2005, loca,
   preprocess = T)
 }
 \arguments{
-\item{arr7bands1}{3d matrix, [spectral bands, spatial points, time series]}
+\item{inputarr}{3d matrix, [spectral bands, spatial points, time series]}
 
 \item{timearr}{the time of the array}
 
