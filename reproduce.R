@@ -1,5 +1,5 @@
 #reproduce the results of the paper 
-
+library(devtools)
 install_github("mengluchu/multibandsBFAST/multibandsBFAST")
 library(multibandsBFAST)
 
@@ -200,6 +200,29 @@ for ( i in 1:1033)
 }
  summary(arrpc2no)
 
-
+# check periodogram
+ pc2sa<-c()
+ for ( i in 1:100) 
+ { 
+   tts<-returnpc2(inputarr = Boliviaarrno,
+                  timearr=time_B1000, 
+                  loca=i, preprocess = F, monitoryear=2005 )
+   
+   
+   time1<-time_B1000[-tts[[1]]] # when compute PCA, the NA values are removed. time1 is the time of PC scors.
+   otss<-zoo(tts[[3]], time1)
+   trimts<- window(otss, start = as.Date("2003-01-01"), end = as.Date("2014-12-31"))
+   monthts<- aggregate(trimts, as.yearmon, mean)
+   rt<-as.Date(range(time(monthts)))
+   z1<-zoo(, as.yearmon(seq(from=rt[1], to=rt[2], by = "month")))
+   
+   zm1 <- merge(monthts, z1)
+   zm <- na.approx(zm1)
+   sazm<-spec.ar(zm)
+   mf<-sazm$freq[which.max(sazm$spec)]
+   #rs<-checkseats(coredata(otss), order=1, time1=time(otss))
+   pc2sa[i]<-mf
+ }
+ summary(pc2sa)
 
 
