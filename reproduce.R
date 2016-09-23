@@ -1,6 +1,10 @@
 #reproduce the results of the paper 
 
+install_github("mengluchu/multibandsBFAST/multibandsBFAST")
+library(multibandsBFAST)
+
 #data
+
 data(Boliviaarrno)  
 data(Brazilarrno)  
 data(Boliviaarr)   
@@ -21,12 +25,9 @@ data(valichartbr)
 historypca<-wrap (multibandsarr=Boliviaarr,multibandsarrno=Boliviaarrno,timearr=time_B1000,history="all",
                   lastordetect = "last", scoreselect=F, sca=F, hisweight=T, moy=1)
 
- 
-
 pcascore<-wrap (multibandsarr=Boliviaarr,multibandsarrno=Boliviaarrno,timearr=time_B1000,history="all",
                 lastordetect = "last", scoreselect = T, sca = F, hisweight = F,moy=1)
  
-
 # vegetation indices
 Boliviaarr <- aaply(Boliviaarr,c(1,2),rmsat) #remove extreme value outside valid  range (1-10000)
 Boliviaarr <- aaply(Boliviaarr,c(1,2),removedips) # remove low value
@@ -167,7 +168,7 @@ rep_figloading<-function(arr, timearr, varname="bands", plotw="bands", xaxisname
 rep_figloading(arr = Boliviaarrno, timearr = time_B1000)
 rep_figloading(arr = Brazilarrno, timearr = Braziltime)
 
-#reproduce plot time series figures
+#reproduce plot time series figures, image is stored, name specified in the nameplot
 for( i in c(1,27))
 {  
   plotts2 (arr = Boliviaarr,tctl1 = 236,timearr=time_B1000,
@@ -191,8 +192,7 @@ for ( i in 1:1033)
   tts <- returnpc2(inputarr = Boliviaarrno,
                    timearr = time_B1000, 
                    loca = i, preprocess = F, monitoryear = 2005 )
-  
-  
+ 
   time1 <- time_B1000[-tts[[1]]] # when compute PCA, the NA values are removed. time1 is the time of PC scors.
   otss <- zoo(tts[[3]], time1)
   rs <- checkseats(coredata(otss), order=1, time1=time(otss))

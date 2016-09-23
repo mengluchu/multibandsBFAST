@@ -63,10 +63,10 @@ plotts2<-function(arr, tctl1, timearr, id,
     
     vnames <- c("NDMI","NDVI", 
                 "TB", "TG", "TW",
-                paste("Historical PCA (", idpcauto, ")", sep=""),
-                paste("PCA score (", idpcauto, ")",sep=""),
+                paste("Historical PCA (PC", idpcauto, ")", sep=""),
+                paste("PCA score (PC", idpcauto, ")",sep=""),
                 "PC-brightness (PC1) ",
-                paste("PC-greenness (", idpcg,")", sep=""))
+                paste("PC-greenness (PC", idpcg,")", sep=""))
     
     colnames(dtas) <- vnames
     times<-decimal_date(strptime( BTestchangeDate,format="%Y%j"))
