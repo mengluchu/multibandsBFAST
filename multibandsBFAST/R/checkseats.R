@@ -3,6 +3,7 @@
 #' @param  order order of harmonics
 #' @param time1 time of the time series
 #' @return r sqaure of harmonic fitting
+#' @import zoo
 #' @export
 
 
@@ -22,7 +23,6 @@ checkseats<-function(ts, order, time1)
   co <-cos(outer(2*pi*time(zz),c(1:3))[,order])
   
   fit<-lm(zz~co+si)
-  # result6[i]<-summary(fit)$ adj.r.squared 
   output<-summary(fit)$r.squared   
   
   return(output)

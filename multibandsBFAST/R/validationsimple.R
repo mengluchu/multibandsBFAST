@@ -3,7 +3,6 @@
 #' @param oridensetime array time 
 #' @param oritemplate a matrix of the location of each time stamp of each time series.To compare the time by observations 
 #' @return daf3 dataframe with confusion matrix and time delay. can use stargazer to generate a table
-#' @import stargazer
 #' @export 
 #VALIDATION
 #**************************************************************************

@@ -10,6 +10,8 @@
 #' @return PChists1 -3, auto index calculated from historical eigenvector 
 #' @return TB , TG, TW
 #' @import bfast
+#' @import plyr
+#' @import reshape2
 #' @export 
 
 returnts2<-function(inputarr, timearr, tctl1, monitoryear=2005, loca, preprocess=T )
@@ -47,7 +49,6 @@ returnts2<-function(inputarr, timearr, tctl1, monitoryear=2005, loca, preprocess
   if(pcacompauto==pcacompauto2)
   pcacompauto= ifelse (pcacompauto2 == 3, 2, 3)
   
-  
   PChweightauto<-fit$rotation[, pcacompauto]
   PC2hweightauto<-fit$rotation[, pcacompauto2]
 
@@ -83,7 +84,6 @@ returnts2<-function(inputarr, timearr, tctl1, monitoryear=2005, loca, preprocess
   PCweightauto <- fit3$rotation[,pcacompauto]
   
   PCtsauto <- drop (na.omit(PCAscorearr) %*% PCweightauto)
-  #PCtsauto<-drop(arr%*% PCweightauto)
   re <- attributes(arr)$na.action
   str(t(arrbandsrm))
   tct1<- tctts(t(arrbandsrm) , tctl1)

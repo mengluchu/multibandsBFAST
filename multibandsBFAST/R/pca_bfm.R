@@ -1,7 +1,7 @@
 #' @title Integrate PCA in bfast monitor
 #' @param arr imput array
 #' @import zoo
-#' @import reshape2
+#' @import bfast
 #' @export
 pca_bfm <- function(arr, hisweight, pcacomp, 
                              myear, 
@@ -93,7 +93,7 @@ pca_bfm <- function(arr, hisweight, pcacomp,
         if(stmon > (myear+acoun+moy))
         {
           acoun <- acoun+1
-          # plot(bfm)}  
+             
         }  
       } 
     }

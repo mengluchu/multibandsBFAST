@@ -327,6 +327,7 @@ nt2t3ns<-bfmPCAALL(arr7bands2=Brazilarrno,hisweight=T, timearr=Braziltime,
                    plot=FALSE,
                    pcacomp=2,moy=1,lastordetect='last' )
 
+# put the results of two arrays together
 wrap<-function(arr7 , arr7no , plot=F,
                pcacomp, moy,lastordetect='last',
                wholet , history="all", hisweight=T,sca, scoreselect=F)

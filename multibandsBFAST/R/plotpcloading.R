@@ -1,4 +1,6 @@
 #' @title  reproduce the plot of pc loading
+#' @import ggplot2
+#' @import reshape2
 #' @export 
 
   
@@ -47,20 +49,20 @@ plotloading <- function(PCfit, varname="", obsname="", xaxisname="",tax=16, plot
   }
 }
   
-rep_figloading<-function(arr, timearr, varname="bands", plotw="bands", xaxisname="bands", obsname="temporal spatial points")
-{  
-b1<- aaply(arr,c(1,2),rmsat) #remove extreme value outside valid  range (1-10000)
-b2<-aaply(b1,c(1,2),removedips) # remove low value
+#rep_figloading<-function(arr, timearr, varname="bands", plotw="bands", xaxisname="bands", obsname="temporal spatial points")
+#{  
+#b1<- aaply(arr,c(1,2),rmsat) #remove extreme value outside valid  range (1-10000)
+#b2<-aaply(b1,c(1,2),removedips) # remove low value
 
-Boliviaarr2 <- rearrange_array(b2, flatten=c(2,3),)
-fit<-prcomp(na.omit(t(Boliviaarr2)),scale.=T)
- 
+#Boliviaarr2 <- rearrange_array(b2, flatten=c(2,3),)
+#fit<-prcomp(na.omit(t(Boliviaarr2)),scale.=T)
+# 
 #jpeg("Brno.jpg") 
 
-plotloading(PCfit = fit, varname = varname, obsname = obsname,xaxisname = xaxisname,
-            addline = 0, nl=4, plotw=plotw)
+#plotloading(PCfit = fit, varname = varname, obsname = obsname,xaxisname = xaxisname,
+#            addline = 0, nl=4, plotw=plotw)
 #dev.off()
-}
+#}
 
 #rep_figloading(arr = Boliviaarrno, timearr = time_B1000)
 #rep_figloading(arr = Brazilarrno, timearr = Braziltime)

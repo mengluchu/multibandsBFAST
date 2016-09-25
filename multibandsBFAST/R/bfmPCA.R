@@ -5,7 +5,6 @@
 #' @param scoreselect if True, select a PC score, specified in pcacomp
 #' @param timearr The time of the time dimension of the 3-d array 
 #' @param lastordetect Use the last observation or detected change date for validation. Useful for PC score method
-
 #' @return detected Change time for each pixel
 #' @import plyr
 #' @export 
@@ -31,26 +30,13 @@ bfmPCA<-function(multibandsarr,history=c("all", "ROC", "BP"),
         lastordetect=lastordetect,
         scoreselect=scoreselect, pcacomp=pcacomp,
         sca=sca), silent=F)
-  
-  #for (i in 1:dim(a7bandsrm2)[2])
-  #{ 
-   # ta7b<-t(a7bandsrm2[,i,])  
-  #  bfmic<- try(pca_bfm(arr=ta7b,hisweight= hisweight, 
-  #                      history= history ,myear=2005,
-  #                      my_dates=timearr, moy=moy,
-  ##                      lastordetect=lastordetect,
-  #                      scoreselect=scoreselect, pcacomp=pcacomp,
-  #                      sca=sca),silent=F)
-    
-    #if(class(bfmic)!='try-error'){
-    #  if(!is.na(bfmic))
-     # {  
-    #    timebfm[i]<-bfmic    
-     # }
-    #}
-   
-  return(bfmic)  }
-#}
+ 
+   if(class(bfmic)=='try-error')
+     bfmic=-0.1
+     
+     return(bfmic)  
+  }
+
 
 
 

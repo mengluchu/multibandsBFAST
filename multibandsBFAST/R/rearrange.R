@@ -2,7 +2,6 @@
 #' @param original_array 
 #' @param position place /order/position of the new dimension
 #' @param flatten dimensions to be flattened. 
-#  rearrange_array (original_array=X,   flatten=c(2,3), position=1) 
 #' @return rearranged array
 #' @export 
 rearrange_array <- function (original_array, flatten = c(1), position=min(flatten)) 
@@ -30,4 +29,4 @@ rearrange_array <- function (original_array, flatten = c(1), position=min(flatte
   }
   return(newarr)
 }
- 
+#  rearrange_array (original_array=X,   flatten=c(2,3), position=1) 

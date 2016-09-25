@@ -2,6 +2,13 @@
 library(devtools)
 install_github("mengluchu/multibandsBFAST/multibandsBFAST")
 library(multibandsBFAST)
+require(zoo)
+require(stargazer)
+requirese(plyr)
+require(bfast)
+require(ggplot2)
+require(lubridate)
+require(reshape2)
 
 #data
 
@@ -29,6 +36,10 @@ pcascore<-wrap (multibandsarr=Boliviaarr,multibandsarrno=Boliviaarrno,timearr=ti
                 lastordetect = "last", scoreselect = T, sca = F, hisweight = F,moy=1)
  
 # vegetation indices
+#preprocess
+Boliviaarrno<- aaply(Boliviaarrno,c(1,2),rmsat) #remove extreme value outside valid  range (1-10000)
+Boliviaarrno<-aaply(Boliviaarrno,c(1,2),removedips) # remove low value
+# 
 Boliviaarr <- aaply(Boliviaarr,c(1,2),rmsat) #remove extreme value outside valid  range (1-10000)
 Boliviaarr <- aaply(Boliviaarr,c(1,2),removedips) # remove low value
 
@@ -75,6 +86,7 @@ pcascorebr<-wrap (multibandsarr=Brazilarr,multibandsarrno=Brazilarrno,timearr=Br
 Brazilarr<- aaply(Brazilarr,c(1,2),rmsat) #remove extreme value outside valid  range (1-10000)
 Brazilarr<-aaply(Brazilarr,c(1,2),removedips) # remove low value
 
+
 Brazilarrno <- aaply(Brazilarrno,c(1,2),rmsat) #remove extreme value outside valid  range (1-10000)
 Brazilarrno <- aaply(Brazilarrno,c(1,2),removedips) # remove low value
 
@@ -89,6 +101,11 @@ tctbr<-tct(Brazilarr, 120)
 tctbrno<-tct(Brazilarrno, 120)
 
 #univariable
+#preprocess
+Brazilarrno<- aaply(Brazilarrno ,c(1,2),rmsat) #remove extreme value outside valid  range (1-10000)
+Brazilarrno<-aaply(Brazilarrno,c(1,2),removedips) # remove low value
+# 
+
 NDVIbr<-wrapVI (multibandsarr=ndviarrbr,multibandsarrno=ndviarrnobr,timearr=Braziltime,history="all",
                 moy=1)
 NDMIbr<-wrapVI (multibandsarr=ndmiarrbr,multibandsarrno=ndmiarrnobr,timearr=Braziltime,history="all",

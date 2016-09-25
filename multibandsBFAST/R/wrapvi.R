@@ -1,11 +1,10 @@
-#' @title  wrap for univariant
+#' @title  wrap for univariable
 #' @export
 wrapVI<-function(multibandsarr ,multibandsarrno ,timearr ,history ,
                  pcacomp, moy )
 {
   a1<-bfmVI(multibandsarr=multibandsarr,timearr=timearr,history=history,
-            moy=moy, 
-  )
+            moy=moy)
   
   a2<-bfmVI(multibandsarr=multibandsarrno,timearr=timearr,history=history,
             moy=moy)

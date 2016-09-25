@@ -2,7 +2,8 @@
 #' @param x input time series coredata
 #' @param my_dates the time book keeped for the time series
 #' @return  date of change 
- 
+#' @import bfast
+#' @import lubridate
 #' @export 
 uniindex_bfm <- function(x, moy=1, myear = 2005,
                               history ,

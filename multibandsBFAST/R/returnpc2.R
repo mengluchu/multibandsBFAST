@@ -2,6 +2,7 @@
 #' @return re book keeping the index of omited value
 #' @return PChistsauto score of the Historical PCA
 #' @return PChists2 score of the PC greenness
+#' @import plyr
 #' @export
 returnpc2<-function(inputarr, timearr, loca, preprocess=T, monitoryear)
 {
@@ -9,7 +10,6 @@ returnpc2<-function(inputarr, timearr, loca, preprocess=T, monitoryear)
   {  
     a7bandsrm <- aaply(inputarr,c(1,2),rmsat) #remove extreme value outside valid  range (1-10000)
     a7bandsrm2 <- aaply(a7bandsrm,c(1,2),removedips) # remove low value
-    
   } else  a7bandsrm2 = inputarr 
   
   arr <- na.omit(t(a7bandsrm2[,loca,]))

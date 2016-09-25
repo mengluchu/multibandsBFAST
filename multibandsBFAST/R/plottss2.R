@@ -8,6 +8,7 @@
 #' @param BTestchangeDate validation change date for each location
 #' @import ggplot2
 #' @import plyr
+#' @import reshape2
 #' @export
 
 plotts2<-function(arr, tctl1, timearr, id,
@@ -15,8 +16,7 @@ plotts2<-function(arr, tctl1, timearr, id,
 {
   a1<- try(returnts2(inputarr = arr, 
                     tctl1=tctl1, timearr=timearr,
-                    loca=id, monitoryear = monitoryear)
-    ) 
+                    loca=id, monitoryear = monitoryear)) 
   
   rpcts <- as.numeric(rownames(na.omit(a1[[length(a1)]])))
 
@@ -24,8 +24,7 @@ plotts2<-function(arr, tctl1, timearr, id,
     dta <- data.frame(a1[[2]],a1[[3]] ,
                       a1[[12]],a1[[13]],a1[[14]],a1[[11]],a1[[8]],a1[[8]],
                       a1[[9]] )  
-    #str(a1)
-    
+ 
     dtav <- c(a1[[2]],a1[[3]] ,
              a1[[12]],a1[[13]],a1[[14]],a1[[11]],a1[[7]],a1[[8]],
              a1[[9]] )  
@@ -34,32 +33,30 @@ plotts2<-function(arr, tctl1, timearr, id,
     dtas<-dta[,selectv]
     n=ncol(dtas)  # one for the time and one for pca list
     variable.groups0 <- rep(c(1:6), each=nrow(dtas))
-    variable.groups1 <- rep(7,   length(a1[[7]]))
-    variable.groups2 <- rep(c(8:n),   each=nrow(dtas) )
+    variable.groups1 <- rep(7, length(a1[[7]]))
+    variable.groups2 <- rep(c(8:n), each=nrow(dtas) )
     variable.groups<- c(variable.groups0,variable.groups1,variable.groups2)
     #variable.groups <- rep(c(1:n), each=nrow(dtas)) 
     BFMtime=0
     timerm<- timearr[-as.numeric(attributes( a1[[1]])$names)]
-    
     timerm2<- timearr[-c(as.numeric(attributes( a1[[1]])$names), rpcts)]
     
     timedec <- decimal_date(timerm)
     timedec2 <- decimal_date(timerm2)
     
-    for( j in   selectv)
+    for( j in selectv)
     {
       bfts<-bfastts(dta[,j], timerm, type = c("irregular"))
       bfm<-bfastmonitor(bfts, start=c(monitoryear,01),  history =   "all",  formula = response ~  harmon, order=1, type="OLS-MOSUM")
-      # plot(zoo(dta[,i],times))
-      
       BFMtime<- cbind(BFMtime, bfm$breakpoint)
     }
     
       BFMtime <- BFMtime[-1]
       ti<-  (length(a1)-1)
       BFMtime [7]<-a1[[ti]]
-    idpcg<-a1[[length(a1)-2]]
-    idpcauto<-a1[[length(a1)-3]]
+     # the pc order
+      idpcg<-a1[[length(a1)-2]]
+      idpcauto<-a1[[length(a1)-3]]
     
     vnames <- c("NDMI","NDVI", 
                 "TB", "TG", "TW",
@@ -70,14 +67,12 @@ plotts2<-function(arr, tctl1, timearr, id,
     
     colnames(dtas) <- vnames
     times<-decimal_date(strptime( BTestchangeDate,format="%Y%j"))
-   
-    
+  
       dtatime0<-rep (timedec, 6 )
       dtatime02<- rep(timedec, (n-7))
-     
-     dtatime2<-c(dtatime0,timedec2,dtatime02)
+      dtatime2<-c(dtatime0,timedec2,dtatime02)
   
-     names0 <- rep(vnames[1:6], each=nrow(dtas))
+    names0 <- rep(vnames[1:6], each=nrow(dtas))
     names01 <- rep(vnames[7],   length(a1[[7]]))
     names02 <- rep(vnames[8:n],   each=nrow(dtas) )
     namesall<- c(names0,names01,names02)
@@ -86,13 +81,11 @@ plotts2<-function(arr, tctl1, timearr, id,
     melted <- data.frame(as.numeric(variable.groups), as.numeric(dtatime2), namesall, as.numeric(dtav))
     tail(melted)
     colnames(melted)<-c("ID","time","PCscoreID","value")
-     # levels(melted$PCscoreID)
-    
+
     zd= data.frame(z=BFMtime, PCscoreID = vnames ) # dimension name need to be the same "PCSCORE"
     #levels(melted$PCscoreID
     melted$PCscoreID = factor(melted$PCscoreID, levels=vnames)
      
-    
     #plot 
     tsplot <- ggplot(data=melted, 
                       aes(x=time,  y=value, 

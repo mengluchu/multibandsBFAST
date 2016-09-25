@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrapvi.R
 \name{wrapVI}
 \alias{wrapVI}
-\title{wrap for univariant}
+\title{wrap for univariable}
 \usage{
 wrapVI(multibandsarr, multibandsarrno, timearr, history, pcacomp, moy)
 }
