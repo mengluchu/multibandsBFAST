@@ -22,6 +22,6 @@ bfmPCA(multibandsarr, history = c("all", "ROC", "BP"), hisweight, timearr,
 \item{sca}{If True, Scale the newly aquired data with the whole time series.}
 }
 \value{
-bfmic detected Change time for each pixel
+detected Change time for each pixel
 }
 

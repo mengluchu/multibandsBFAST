@@ -81,10 +81,10 @@ returnts2 <- function(inputarr, timearr, tctl1, monitoryear = 2005, loca,
     TB <- na.omit(tct1[[1]])
     TG <- na.omit(tct1[[2]])
     TW <- na.omit(tct1[[3]])
-    res <- list(structure(removedindexhis = re, NDMI = ndmi, NDVI = ndvi, 
+    res <- list(removedindexhis = re, NDMI = ndmi, NDVI = ndvi, 
         PC1 = PCts1, PC2 = PCts2, PC3 = PCts3, PCauto = PCtsauto, hisPC1 = PChists1, 
         hisPCgreeness = PChists2, hisPC3 = PChists3, hisPCauto = PChistsauto, 
         TB = TB, TG = TG, TW = TW, PCautoorder = pcacompauto, PCgreennessorder = pcacompauto2, 
-        bfasttime = bt, removedindexpcscore = re2))
+        bfasttime = bt, removedindexpcscore = re2)
     return(res)
 }

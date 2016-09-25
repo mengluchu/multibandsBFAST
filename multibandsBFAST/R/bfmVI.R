@@ -13,6 +13,6 @@ bfmVI <- function(multibandsarr, monitoryear = 2005, timearr, moy = 1, history =
         silent = F)
     if (class(bfmic) == "try-error") 
         bfmic = -0.1
-    return(structure(bfmic = bfmic))
+    return(bfmic)
 }
 

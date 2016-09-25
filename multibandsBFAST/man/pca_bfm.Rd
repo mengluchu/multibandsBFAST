@@ -12,6 +12,6 @@ pca_bfm(arr, hisweight, pcacomp, myear, history = c("all"), my_dates,
 \item{arr}{An imput array}
 }
 \value{
-timeofchange detected Change time for each pixel
+detected Change time for each pixel
 }
 

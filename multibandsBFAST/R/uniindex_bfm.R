@@ -3,7 +3,7 @@
 #' @param my_dates the time book keeped for the time series
 #' @import bfast
 #' @import lubridate
-#' @return timeofchange detected change time for a time series
+#' @return Detected change time for a time series
 #' @export 
 uniindex_bfm <- function(x, moy = 1, myear = 2005, history, my_dates, minumum_observations = 15, 
     type = "OLS-MOSUM") {
@@ -55,7 +55,7 @@ uniindex_bfm <- function(x, moy = 1, myear = 2005, history, my_dates, minumum_ob
         }
     }
     output <- as.numeric(breakpointx)
-    return(structure(timeofchange = output))
+    return(output)
 }
 
 

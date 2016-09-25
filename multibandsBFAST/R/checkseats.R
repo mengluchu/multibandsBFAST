@@ -2,7 +2,7 @@
 #' @param ts core data of time series to check 
 #' @param  order order of harmonics
 #' @param time1 time of the time series
-#' @return rsquare r-sqaure of harmonic fitting
+#' @return r-sqaure of harmonic fitting for a time series
 #' @import zoo
 #' @export
 
@@ -24,6 +24,5 @@ checkseats <- function(ts, order, time1) {
     
     fit <- lm(zz ~ co + si)
     output <- summary(fit)$r.squared
-    
-    return(structure(rsquare = output))
+    return(output)
 }

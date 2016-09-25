@@ -13,6 +13,6 @@ uniindex_bfm(x, moy = 1, myear = 2005, history, my_dates,
 \item{my_dates}{the time book keeped for the time series}
 }
 \value{
-timeofchange detected change time for a time series
+Detected change time for a time series
 }
 

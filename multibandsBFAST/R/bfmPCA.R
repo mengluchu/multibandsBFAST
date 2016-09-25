@@ -5,7 +5,7 @@
 #' @param scoreselect For the PCA score method, if True, automatically select a PC score. If false, pc order is specified in pcacomp. Ignored for the historical PCA method. 
 #' @param timearr The time of the time dimension of the 3-d array 
 #' @param lastordetect Use the last observation or detected change date for validation. Useful for PC score method
-#' @return bfmic detected Change time for each pixel
+#' @return detected Change time for each pixel
 #' @import plyr
 #' @export 
 bfmPCA <- function(multibandsarr, history = c("all", "ROC", "BP"), hisweight, 
@@ -21,5 +21,5 @@ bfmPCA <- function(multibandsarr, history = c("all", "ROC", "BP"), hisweight,
         scoreselect = scoreselect, pcacomp = pcacomp, sca = sca), silent = F)
     if (class(bfmic) == "try-error") 
         bfmic = -0.1
-    return(structure(bfmic = bfmic))
+    return(bfmic)
 }

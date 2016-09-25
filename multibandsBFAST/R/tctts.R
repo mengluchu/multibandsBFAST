@@ -39,5 +39,5 @@ tctts <- function(arr, l1) {
     cbrightness <- aa3[, 1]
     cgreeness <- aa3[, 2]
     cwetness <- aa3[, 3]
-    return(structure(list(tb = cbrightness, tg = cgreeness, tw = cwetness)))
+    return(list(tb = cbrightness, tg = cgreeness, tw = cwetness))
 }
