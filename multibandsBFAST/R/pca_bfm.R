@@ -79,6 +79,6 @@ pca_bfm <- function(arr, hisweight, pcacomp, myear, history = c("all"),
     if (lastordetect == "last") 
         output <- as.numeric(breakpointx2) else if (lastordetect == "detect") 
         output <- as.numeric(breakpointx)
-    return(structure(timeofchange(output)))
+    return(structure(timeofchange = output))
     
 }
