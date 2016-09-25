@@ -9,4 +9,7 @@ removedips(x)
 \value{
 time series with dips removed
 }
+\note{
+adapted from Eliakim's code
+}
 

@@ -8,10 +8,13 @@ bfmVI(multibandsarr, monitoryear = 2005, timearr, moy = 1,
   history = "all", type = "OLS-MOSUM")
 }
 \arguments{
-\item{multibandsarr}{3-d array, space, time and spectral bands}
+\item{multibandsarr}{A 2-d array, with spatial and time as dimensions}
 
 \item{timearr}{The time of the time dimension of the 3-d array}
 
-\item{moy}{Period for sequential test. moy is 1 means to monitor every 2 years.}
+\item{moy}{Monitoring period for the sequential test. moy is 1 means to monitor every 2 years.}
+}
+\value{
+bfmic Detected change time for each pixel
 }
 

@@ -15,6 +15,9 @@ valitable(cx2, oridensetime, oritemplate, EarlyDateIsCommission = T, totalp,
 \item{oritemplate}{a matrix of the location of each time stamp of each time series.To compare the time by observations}
 }
 \value{
-daf3 dataframe with confusion matrix and time delay. can use stargazer to generate a table
+dataframe with confusion matrix and time delay. can use stargazer to generate a table
+}
+\note{
+adapted from Eliakim's code
 }
 

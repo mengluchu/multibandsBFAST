@@ -10,6 +10,6 @@ rmsat(x)
 \item{x}{time series}
 }
 \value{
-x time series with extreme value and negative value filled with NA
+time series with extreme value and negative value filled with NA
 }
 

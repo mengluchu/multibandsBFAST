@@ -14,6 +14,6 @@ checkseats(ts, order, time1)
 \item{time1}{time of the time series}
 }
 \value{
-r sqaure of harmonic fitting
+rsquare r-sqaure of harmonic fitting
 }
 

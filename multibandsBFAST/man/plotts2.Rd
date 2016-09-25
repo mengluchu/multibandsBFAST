@@ -21,4 +21,7 @@ plotts2(arr, tctl1, timearr, id, nameplot, BTestchangeDate, monitoryear)
 
 \item{monitoryear}{year to start monitoring}
 }
+\value{
+plot time series, as well as the detected and real change time as in the paper. The results is saved.
+}
 

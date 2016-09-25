@@ -2,7 +2,7 @@
 % Please edit documentation in R/returnts2.R
 \name{returnts2}
 \alias{returnts2}
-\title{return time series ndmi,ndvi, PCts1, PCts2, PCts3, PCtsauto, PChists1, PChists2, PChists3,PChistsauto, TB, TG, TW. In addition, the removed index is book-keeped}
+\title{return time series ndmi,ndvi, PCts1, PCts2, PCts3, PCtsauto, PChists1, PChists2, PChists3,PChistsauto, TB, TG, TW. Return also the PCgreeness and selected PC orders, In addition, the removed index is book-keeped}
 \usage{
 returnts2(inputarr, timearr, tctl1, monitoryear = 2005, loca,
   preprocess = T)
@@ -19,14 +19,10 @@ returnts2(inputarr, timearr, tctl1, monitoryear = 2005, loca,
 \item{loca}{the spatial id for the time series to be returned}
 }
 \value{
-re the time stamp to be removed.
+time stamp to be removed, vegetation index ndmi, ndvi
 
-ndmi, ndvi
+PC scores from two PCA methods: Historical PC 1-3, auto PC score, PC score 1-3, auto PCscore, time series unscaled.
 
-PCts1 -3, auto PC score, time series unscaled.
-
-PChists1 -3, auto index calculated from historical eigenvector
-
-TB , TG, TW
+TB, TG, TW
 }
 

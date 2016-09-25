@@ -6,4 +6,7 @@
 \usage{
 wrapVI(multibandsarr, multibandsarrno, timearr, history, pcacomp, moy)
 }
+\value{
+time of change for each variable
+}
 

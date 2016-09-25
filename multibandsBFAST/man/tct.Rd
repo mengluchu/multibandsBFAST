@@ -2,7 +2,7 @@
 % Please edit documentation in R/tct.R
 \name{tct}
 \alias{tct}
-\title{tasseled cap transformation}
+\title{tasseled cap transformation on array}
 \usage{
 tct(arr, l1)
 }
@@ -12,10 +12,10 @@ tct(arr, l1)
 \item{l1}{from which index the ETM+ is used}
 }
 \value{
-cgreenness
+tb cbrightness
 
-cwetness
+tg cgreenness
 
-cbrightness
+tw cwetness
 }
 

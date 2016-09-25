@@ -2,7 +2,7 @@
 % Please edit documentation in R/uniindex_bfm.R
 \name{uniindex_bfm}
 \alias{uniindex_bfm}
-\title{BFAST on single index}
+\title{BFAST sequential monitor on single index}
 \usage{
 uniindex_bfm(x, moy = 1, myear = 2005, history, my_dates,
   minumum_observations = 15, type = "OLS-MOSUM")
@@ -13,6 +13,6 @@ uniindex_bfm(x, moy = 1, myear = 2005, history, my_dates,
 \item{my_dates}{the time book keeped for the time series}
 }
 \value{
-date of change
+timeofchange detected change time for a time series
 }
 

@@ -9,19 +9,19 @@ bfmPCA(multibandsarr, history = c("all", "ROC", "BP"), hisweight, timearr,
   "detect"), sca = F)
 }
 \arguments{
-\item{multibandsarr}{3-d array, space, time and spectral bands}
+\item{multibandsarr}{A 3-d array, with spectral bands, space and time as dimensions.}
 
 \item{hisweight}{If True, Use the historical PCA method. If False, use the PCA score method.}
 
 \item{timearr}{The time of the time dimension of the 3-d array}
 
-\item{scoreselect}{if True, select a PC score, specified in pcacomp}
+\item{scoreselect}{For the PCA score method, if True, automatically select a PC score. If false, pc order is specified in pcacomp. Ignored for the historical PCA method.}
 
 \item{lastordetect}{Use the last observation or detected change date for validation. Useful for PC score method}
 
 \item{sca}{If True, Scale the newly aquired data with the whole time series.}
 }
 \value{
-detected Change time for each pixel
+bfmic detected Change time for each pixel
 }
 

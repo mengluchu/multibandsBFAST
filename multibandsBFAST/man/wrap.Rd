@@ -2,12 +2,15 @@
 % Please edit documentation in R/wrap.R
 \name{wrap}
 \alias{wrap}
-\title{wrap for running different dataset}
+\title{wrap for PCA, running different dataset}
 \usage{
 wrap(multibandsarr, multibandsarrno, timearr, history, lastordetect, hisweight,
   pcacomp, moy, scoreselect, sca)
 }
 \arguments{
 \item{multibandsarrno}{the second dataset}
+}
+\value{
+time of change for each variable
 }
 

@@ -9,6 +9,9 @@ pca_bfm(arr, hisweight, pcacomp, myear, history = c("all"), my_dates,
   type = "OLS-MOSUM", moy = 1)
 }
 \arguments{
-\item{arr}{imput array}
+\item{arr}{An imput array}
+}
+\value{
+timeofchange detected Change time for each pixel
 }
 

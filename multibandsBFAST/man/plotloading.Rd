@@ -7,4 +7,7 @@
 plotloading(PCfit, varname = "", obsname = "", xaxisname = "", tax = 16,
   plotw = c("time", "bands", "bandsts"), nl = 4, rastertime, addline = 0)
 }
+\value{
+the plots of PC loadings as in the paper
+}
 

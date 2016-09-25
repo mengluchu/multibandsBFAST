@@ -12,10 +12,6 @@ tctts(arr, l1)
 \item{l1}{from which index the ETM+ is used}
 }
 \value{
-cgreenness
-
-cwetness
-
-cbrightness
+tasselcap greenness (TG), brightness (TB) and wetness (TW)
 }
 
