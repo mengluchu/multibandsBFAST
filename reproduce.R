@@ -2,16 +2,10 @@
 library(devtools)
 install_github("mengluchu/multibandsBFAST/multibandsBFAST")
 library(multibandsBFAST)
-#require(zoo)
-#require(stargazer)
+require(zoo)
+require(stargazer)
 require(plyr)
-#require(bfast)
-#require(ggplot2)
-#require(lubridate)
-#require(reshape2)
-
-# data
-
+#data 
 data(Boliviaarrno)
 data(Brazilarrno)
 data(Boliviaarr)
@@ -26,7 +20,6 @@ data(bobo5)
 data(brbo5)
 data(valichartbo)
 data(valichartbr)
-
 
 ## Bolivia site
 historypca <- wrap(multibandsarr = Boliviaarr, multibandsarrno = Boliviaarrno, timearr = time_B1000, 
@@ -69,7 +62,6 @@ NDVI <- wrapVI(multibandsarr = ndviarr, multibandsarrno = ndviarrno, timearr = t
 NDMI <- wrapVI(multibandsarr = ndmiarr, multibandsarrno = ndmiarrno, timearr = time_B1000, 
     history = "all", moy = 1)
 
-
 tctbright <- wrapVI(multibandsarr = tctbo[[1]], multibandsarrno = tctbono[[1]], timearr = time_B1000, 
     history = "all", moy = 1)
 
@@ -78,7 +70,6 @@ tctgreen <- wrapVI(multibandsarr = tctbo[[2]], multibandsarrno = tctbono[[2]], t
 
 tctwet <- wrapVI(multibandsarr = tctbo[[3]], multibandsarrno = tctbono[[3]], timearr = time_B1000, 
     history = "all", moy = 1)
-
 
 ##### Brazil site ################################
 historypcabr <- wrap(multibandsarr = Brazilarr, multibandsarrno = Brazilarrno, timearr = Braziltime, 
@@ -92,8 +83,6 @@ pcascorebr <- wrap(multibandsarr = Brazilarr, multibandsarrno = Brazilarrno, tim
 ## vegetation indices
 Brazilarr <- aaply(Brazilarr, c(1, 2), rmsat)  #remove extreme value outside valid  range (1-10000)
 Brazilarr <- aaply(Brazilarr, c(1, 2), removedips)  # remove low value
-
-
 Brazilarrno <- aaply(Brazilarrno, c(1, 2), rmsat)  #remove extreme value outside valid  range (1-10000)
 Brazilarrno <- aaply(Brazilarrno, c(1, 2), removedips)  # remove low value
 
@@ -101,7 +90,6 @@ ndmiarrbr <- (Brazilarr[4, , ] - Brazilarr[5, , ])/(Brazilarr[4, , ] + Brazilarr
     , ])
 ndviarrbr <- (Brazilarr[4, , ] - Brazilarr[3, , ])/(Brazilarr[4, , ] + Brazilarr[3, 
     , ])
-
 ndmiarrnobr <- (Brazilarrno[4, , ] - Brazilarrno[5, , ])/(Brazilarrno[4, , ] + Brazilarrno[5, 
     , ])
 ndviarrnobr <- (Brazilarrno[4, , ] - Brazilarrno[3, , ])/(Brazilarrno[4, , ] + Brazilarrno[3, 
@@ -120,19 +108,12 @@ NDVIbr <- wrapVI(multibandsarr = ndviarrbr, multibandsarrno = ndviarrnobr, timea
     history = "all", moy = 1)
 NDMIbr <- wrapVI(multibandsarr = ndmiarrbr, multibandsarrno = ndmiarrnobr, timearr = Braziltime, 
     history = "all", moy = 1)
-
-
-
 tctbrightbr <- wrapVI(multibandsarr = tctbr[[1]], multibandsarrno = tctbrno[[1]], 
     timearr = Braziltime, history = "all", moy = 1)
-
 tctgreenbr <- wrapVI(multibandsarr = tctbr[[2]], multibandsarrno = tctbrno[[2]], 
     timearr = Braziltime, history = "all", moy = 1)
-
 tctwetbr <- wrapVI(multibandsarr = tctbr[[3]], multibandsarrno = tctbrno[[3]], timearr = Braziltime, 
     history = "all", moy = 1)
-
-
 
 # save(valichartbo, file=
 # 'C:/Users/m_lu0002/Dropbox/mengluchu/multiBFAST/valichartbo.Rdata')
@@ -147,7 +128,6 @@ valichartbo[, "tctbright"] <- tctbright
 valichartbo[, "tctgreen"] <- tctgreen
 valichartbo[, "tctwet"] <- tctwet
 
-
 valichartbr[, "historyPCA"] <- historypcabr
 valichartbr[, "PCAscore"] <- pcascorebr
 valichartbr[, "ndvi"] <- NDVIbr
@@ -157,37 +137,30 @@ valichartbr[, "tctgreen"] <- tctgreenbr
 valichartbr[, "tctwet"] <- tctwetbr
 
 # validation bolivia
-bovali <- valitable(cx2 = valichartbo, oridensetime = time_B1000, EarlyDateIsCommission = F, 
+bovali <- valitable(cx2 = valichartbo, oridensetime = time_B1000, EarlyDateIsCommission = T, 
     oritemplate = bobo5, totalp = 1136, nofchange = 103, colmWith = 2)
 
 # Brazil
-brvali <- valitable(valichartbr, Braziltime, brbo5, totalp = 470, EarlyDateIsCommission = F, 
+brvali <- valitable(valichartbr, Braziltime, brbo5, totalp = 470, EarlyDateIsCommission = T, 
     nofchange = 141, colmWith = 2)
 
 # table
 stargazer(brvali, summary = FALSE)
 stargazer(bovali, summary = FALSE)
-
-
-
 ##################################### 
 
 # return ts tts <- returnts2(inputarr = Boliviaarrno, timearr = time_B1000,
 # tctl1=256, loca = i, preprocess = F, monitoryear = 2005 )
-
 
 # reproduce pc loading figure
 rep_figloading <- function(arr, timearr, varname = "bands", plotw = "bands", xaxisname = "bands", 
     obsname = "temporal spatial points") {
     b1 <- aaply(arr, c(1, 2), rmsat)  #remove extreme value outside valid  range (1-10000)
     b2 <- aaply(b1, c(1, 2), removedips)  # remove low value
-    
     Boliviaarr2 <- rearrange_array(b2, flatten = c(2, 3) )
     fit <- prcomp(na.omit(t(Boliviaarr2)), scale. = T)
-  
     plotloading(PCfit = fit, varname = varname, obsname = obsname, xaxisname = xaxisname, 
         addline = 0, nl = 4, plotw = plotw)
-
 }
 
 rep_figloading(arr = Boliviaarrno, timearr = time_B1000)
@@ -212,7 +185,6 @@ arrpc2no <- c()  # save results
 for (i in 1:1033) {
     tts <- returnpc2(inputarr = Boliviaarrno, timearr = time_B1000, loca = i, preprocess = F, 
         monitoryear = 2005)
-    
     time1 <- time_B1000[-tts[[1]]]  # when compute PCA, the NA values are removed. time1 is the time of PC scors.
     otss <- zoo(tts[[3]], time1)
     rs <- checkseats(coredata(otss), order = 1, time1 = time(otss))
@@ -222,11 +194,9 @@ summary(arrpc2no)
 
 # check periodogram
 pc2sa <- c()
-for (i in 1:100) {
+for (i in 1:1033) {
     tts <- returnpc2(inputarr = Boliviaarrno, timearr = time_B1000, loca = i, preprocess = F, 
         monitoryear = 2005)
-    
-    
     time1 <- time_B1000[-tts[[1]]]  # when compute PCA, the NA values are removed. time1 is the time of PC scors.
     otss <- zoo(tts[[3]], time1)
     trimts <- window(otss, start = as.Date("2003-01-01"), end = as.Date("2014-12-31"))
