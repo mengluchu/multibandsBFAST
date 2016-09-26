@@ -63,13 +63,10 @@ plotts2 <- function(arr, tctl1, timearr, id, nameplot, BTestchangeDate,
         names01 <- rep(vnames[7], length(a1[[7]]))
         names02 <- rep(vnames[8:n], each = nrow(dtas))
         namesall <- c(names0, names01, names02)
-        
-        length(variable.groups)
+         
         melted <- data.frame(as.numeric(variable.groups), as.numeric(dtatime2), 
             namesall, as.numeric(dtav))
-        tail(melted)
         colnames(melted) <- c("ID", "time", "PCscoreID", "value")
-        
         zd = data.frame(z = BFMtime, PCscoreID = vnames)  # dimension name need to be the same 'PCSCORE'
         # levels(melted$PCscoreID
         melted$PCscoreID = factor(melted$PCscoreID, levels = vnames)

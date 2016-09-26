@@ -38,7 +38,6 @@ valitable <- function(cx2, oridensetime, oritemplate, EarlyDateIsCommission = T,
         ct2$Chdate <- decimal_date(as.Date(as.character(ct2$ChangeDate), 
             format = "%Y%j"))
         cx1 <- rbind(ct, ct2)
-        
         xo <- c("Pontius Producer's Accuracy", "Sensitivity", "Precision")
         nc <- colmWith
         nz <- colmWith
@@ -52,8 +51,6 @@ valitable <- function(cx2, oridensetime, oritemplate, EarlyDateIsCommission = T,
             for (j in 1:length(cp1)) {
                 xt1 <- cp1[j]
                 xt2 <- cp2[j]
-                print(c(xt1, xt2))
-                
                 # check if it is true positive or true negative
                 if (is.na(xt1) & is.na(xt2)) {
                   ba0 <- "tn"
@@ -164,13 +161,9 @@ valitable <- function(cx2, oridensetime, oritemplate, EarlyDateIsCommission = T,
             x <- subset(t5z, !is.na(t5z))
             xme <- c(xme, median(x))
         }
-        
         return(xme)
     }
-    
-    
     varnames <- names(cx2)[-1]
-    
     Len <- length(cx2)
     lcx2 <- length(cx2)
     for (i in (lcx2 - 1):1) {
@@ -178,26 +171,19 @@ valitable <- function(cx2, oridensetime, oritemplate, EarlyDateIsCommission = T,
         lcx2 <- length(cx2)
     }
     cx2 <- data.frame(cx2[, 1:2], NA, cx2[, 3:lcx2])
-    
     names(cx2)[1:2] <- c("ChangeDate", "Chdate")
     names(cx2)[length(cx2)] <- varnames[length(varnames)]
-    
     # cx2$ChangeDate <- replace (cx2$ChangeDate, cx2$ChangeDate ==8, NA)
-    
     nOfindices2 <- Len - 1
     s <- spatialAccurayAssessmentx(x = cx2, nOfindices = nOfindices2, EarlyDateIsCommission = EarlyDateIsCommission, 
         TotalSamplesize = totalp, snumberOfsamplefromChange = nofchange, 
         colmWith = colmWith)
-    
     Bo5df <- data.frame(oritemplate)
-    
     dtes2 <- decimal_date(as.Date(oridensetime, format = "%Y-%m-%d"))
     xme <- temporalDelay(vdata = cx2, dtes = dtes2, TmSeriesOfSamplePixels = Bo5df, 
         nOfindices = nOfindices2)
-    
     s1 <- s[-1, ]
     daf3 <- cbind(s1, xme)
-    
     colnames(daf3) <- c("Pontius Producers accuracy", "sensitivity", "precision", 
         "temporal_delay")
     rownames(daf3) <- varnames
