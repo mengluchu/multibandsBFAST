@@ -22,24 +22,22 @@ data(valichartbo)
 data(valichartbr)
 
 ## Bolivia site
-historypca <- wrap(multibandsarr = Boliviaarr, multibandsarrno = Boliviaarrno, timearr = time_B1000, 
-    history = "all", lastordetect = "last", scoreselect = F, sca = F, hisweight = T, 
-    moy = 1)
+## can increase the mc.cores for paralle processing
 
-pcascore <- wrap(multibandsarr = Boliviaarr, multibandsarrno = Boliviaarrno, timearr = time_B1000, 
-    history = "all", lastordetect = "last", scoreselect = T, sca = F, hisweight = F, 
-    moy = 1)
+historypca <- mcwrap(multibandsarr = Boliviaarr, multibandsarrno = Boliviaarrno, timearr = time_B1000, 
+                     history = "all", lastordetect = "last", scoreselect = F, sca = F, hisweight = T, 
+                     moy = 1, mc.cores = 1)
 
-# vegetation indices preprocess
+pcascore <- mcwrap(multibandsarr = Boliviaarr, multibandsarrno = Boliviaarrno, timearr = time_B1000, 
+                   history = "all", lastordetect = "last", scoreselect = T, sca = F, hisweight = F, 
+                   moy = 1, mc.cores = 1)
+
+# vegetation indices 
+# preprocess # note: preprocess each bands instead of the vegetation indices
 Boliviaarrno <- aaply(Boliviaarrno, c(1, 2), rmsat)  #remove extreme value outside valid  range (1-10000)
 Boliviaarrno <- aaply(Boliviaarrno, c(1, 2), removedips)  # remove low value
-# 
 Boliviaarr <- aaply(Boliviaarr, c(1, 2), rmsat)  #remove extreme value outside valid  range (1-10000)
 Boliviaarr <- aaply(Boliviaarr, c(1, 2), removedips)  # remove low value
-
-Boliviaarrno <- aaply(Boliviaarrno, c(1, 2), rmsat)  #remove extreme value outside valid  range (1-10000)
-Boliviaarrno <- aaply(Boliviaarrno, c(1, 2), removedips)  # remove low value
-
 
 ndmiarr <- (Boliviaarr[4, , ] - Boliviaarr[5, , ])/(Boliviaarr[4, , ] + Boliviaarr[5, 
     , ])
@@ -54,7 +52,6 @@ ndviarrno <- (Boliviaarrno[4, , ] - Boliviaarrno[3, , ])/(Boliviaarrno[4, , ] + 
 # tct indices
 tctbo <- tct(Boliviaarr, 236)
 tctbono <- tct(Boliviaarrno, 236)
-
 # 
 NDVI <- wrapVI(multibandsarr = ndviarr, multibandsarrno = ndviarrno, timearr = time_B1000, 
     history = "all", moy = 1)
@@ -72,13 +69,13 @@ tctwet <- wrapVI(multibandsarr = tctbo[[3]], multibandsarrno = tctbono[[3]], tim
     history = "all", moy = 1)
 
 ##### Brazil site ################################
-historypcabr <- wrap(multibandsarr = Brazilarr, multibandsarrno = Brazilarrno, timearr = Braziltime, 
+historypcabr <- mcwrap(multibandsarr = Brazilarr, multibandsarrno = Brazilarrno, timearr = Braziltime, 
     history = "all", lastordetect = "last", scoreselect = F, sca = F, hisweight = T, 
-    moy = 1)
+    moy = 1, mc.cores = 1)
 
-pcascorebr <- wrap(multibandsarr = Brazilarr, multibandsarrno = Brazilarrno, timearr = Braziltime, 
+pcascorebr <- mcwrap(multibandsarr = Brazilarr, multibandsarrno = Brazilarrno, timearr = Braziltime, 
     history = "all", lastordetect = "last", scoreselect = T, sca = F, hisweight = F, 
-    moy = 1)
+    moy = 1, mc.cores=1)
 
 ## vegetation indices
 Brazilarr <- aaply(Brazilarr, c(1, 2), rmsat)  #remove extreme value outside valid  range (1-10000)
@@ -99,11 +96,6 @@ ndviarrnobr <- (Brazilarrno[4, , ] - Brazilarrno[3, , ])/(Brazilarrno[4, , ] + B
 tctbr <- tct(Brazilarr, 120)
 tctbrno <- tct(Brazilarrno, 120)
 
-# univariable preprocess
-Brazilarrno <- aaply(Brazilarrno, c(1, 2), rmsat)  #remove extreme value outside valid  range (1-10000)
-Brazilarrno <- aaply(Brazilarrno, c(1, 2), removedips)  # remove low value
-# 
-
 NDVIbr <- wrapVI(multibandsarr = ndviarrbr, multibandsarrno = ndviarrnobr, timearr = Braziltime, 
     history = "all", moy = 1)
 NDMIbr <- wrapVI(multibandsarr = ndmiarrbr, multibandsarrno = ndmiarrnobr, timearr = Braziltime, 
@@ -114,12 +106,7 @@ tctgreenbr <- wrapVI(multibandsarr = tctbr[[2]], multibandsarrno = tctbrno[[2]],
     timearr = Braziltime, history = "all", moy = 1)
 tctwetbr <- wrapVI(multibandsarr = tctbr[[3]], multibandsarrno = tctbrno[[3]], timearr = Braziltime, 
     history = "all", moy = 1)
-
-# save(valichartbo, file=
-# 'C:/Users/m_lu0002/Dropbox/mengluchu/multiBFAST/valichartbo.Rdata')
-# save(valichartbr, file=
-# 'C:/Users/m_lu0002/Dropbox/mengluchu/multiBFAST/valichartbr.Rdata')
-
+ 
 valichartbo[, "historyPCA"] <- historypca
 valichartbo[, "PCAscore"] <- pcascore
 valichartbo[, "ndvi2"] <- NDVI
@@ -144,7 +131,7 @@ bovali <- valitable(cx2 = valichartbo, oridensetime = time_B1000, EarlyDateIsCom
 brvali <- valitable(valichartbr, Braziltime, brbo5, totalp = 470, EarlyDateIsCommission = T, 
     nofchange = 141, colmWith = 2)
 
-# table
+# generate table
 stargazer(brvali, summary = FALSE)
 stargazer(bovali, summary = FALSE)
 ##################################### 
@@ -154,17 +141,19 @@ stargazer(bovali, summary = FALSE)
 
 # reproduce pc loading figure
 rep_figloading <- function(arr, timearr, varname = "bands", plotw = "bands", xaxisname = "bands", 
-    obsname = "temporal spatial points") {
+    obsname = "temporal spatial points", preprocess=F) {
+    if(preprocess){
     b1 <- aaply(arr, c(1, 2), rmsat)  #remove extreme value outside valid  range (1-10000)
     b2 <- aaply(b1, c(1, 2), removedips)  # remove low value
+    } else b2=arr
     Boliviaarr2 <- rearrange_array(b2, flatten = c(2, 3) )
     fit <- prcomp(na.omit(t(Boliviaarr2)), scale. = T)
     plotloading(PCfit = fit, varname = varname, obsname = obsname, xaxisname = xaxisname, 
         addline = 0, nl = 4, plotw = plotw)
 }
 
-rep_figloading(arr = Boliviaarrno, timearr = time_B1000)
-rep_figloading(arr = Brazilarrno, timearr = Braziltime)
+rep_figloading(arr = Boliviaarrno, timearr = time_B1000, preprocess = F)
+rep_figloading(arr = Brazilarrno, timearr = Braziltime, preprocess = F)
 
 # reproduce plot time series figures, image is stored, name specified in the
 # nameplot
@@ -173,15 +162,15 @@ for (i in c(1, 27)) {
         nameplot = "boli_", monitoryear = 2005)
 }
 
-for (i in c(1, 9)) {
+for (i in c(2, 9)) {
     plotts2(arr = Brazilarr, tctl1 = 120, timearr = Braziltime, id = i, BTestchangeDate = BDbr, 
         nameplot = "br_", monitoryear = 2005)
 }
 
 # check seasonatlity of PC
+library(zoo)
 arrpc2no <- c()  # save results
-
-# i can be 1: 1033 test
+# i can be 1: 1033 
 for (i in 1:1033) {
     tts <- returnpc2(inputarr = Boliviaarrno, timearr = time_B1000, loca = i, preprocess = F, 
         monitoryear = 2005)
@@ -203,7 +192,6 @@ for (i in 1:1033) {
     monthts <- aggregate(trimts, as.yearmon, mean)
     rt <- as.Date(range(time(monthts)))
     z1 <- zoo(, as.yearmon(seq(from = rt[1], to = rt[2], by = "month")))
-    
     zm1 <- merge(monthts, z1)
     zm <- na.approx(zm1)
     sazm <- spec.ar(zm)
