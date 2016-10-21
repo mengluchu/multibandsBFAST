@@ -1,7 +1,7 @@
 require(lubridate) 
 require(zoo)
-load("Boliviaarrno.Rdata")
-load("time_B1000.Rdata")
+load("Boliviaarrno.rda")
+load("time_B1000.rda")
  
 #inputarr: input array: Boliviaarrno: dim(Boliviaarrno)    6 1033  444
 #timearr: the time of the imagery series. 444
